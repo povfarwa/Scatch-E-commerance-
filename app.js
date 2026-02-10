@@ -1,35 +1,49 @@
-require("dotenv").config();
-const express = require('express');
+import express from "express";
+import cookieParser from "cookie-parser";
+import path from "path";
+import session from "express-session";
+import flash from "connect-flash";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+import connectDB from "./db.js";
+
+import indexRouter from "./routes/index.js";
+import ownersRouter from "./routes/ownersRouter.js";
+import usersRouter from "./routes/usersRouter.js";
+import productsRouter from "./routes/productsRouter.js";
+
 const app = express();
-const cookieParser = require('cookie-parser');
-const path = require('path');
-const expressSession = require("express-session");
-const flash = require("connect-flash");
 
-const db = require('./config/mongoose-connection');
-const indexRouter = require('./routes/index');
-const ownersRouter = require('./routes/ownersRouter');
-const usersRouter = require('./routes/usersRouter');
-const productsRouter = require('./routes/productsRouter');
+/* dirname fix for ES modules */
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
+/* middlewares */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(expressSession({
+
+app.use(
+  session({
     resave: false,
     saveUninitialized: false,
-    secret: process.env.EXPRESS_SESSION_SECRET || "development_secret"
-}));
+    secret: process.env.EXPRESS_SESSION_SECRET || "development_secret",
+  })
+);
+
 app.use(flash());
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, "public")));
+app.set("view engine", "ejs");
 
-// Routes - FIXED: Changed to plural to match router paths
-app.use('/', indexRouter);
-app.use('/owners', ownersRouter);
-app.use('/users', usersRouter);
-app.use('/products', productsRouter);
+/* DB */
+await connectDB();
 
-// app.listen(3000, () => console.log("Server is running on http://localhost:3000"));
+/* routes */
+app.use("/", indexRouter);
+app.use("/owners", ownersRouter);
+app.use("/users", usersRouter);
+app.use("/products", productsRouter);
+
 export default app;
