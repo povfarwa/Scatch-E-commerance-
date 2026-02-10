@@ -31,4 +31,5 @@ app.use('/owners', ownersRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 
-app.listen(3000, () => console.log("Server is running on http://localhost:3000"));
+// app.listen(3000, () => console.log("Server is running on http://localhost:3000"));
+export default app;
