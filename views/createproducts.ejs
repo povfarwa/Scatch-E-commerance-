@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Create Product</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body class="bg-[#F8F9FA] font-sans text-gray-900">
+
+    <nav class="w-full px-10 py-6 flex justify-between items-center bg-white border-b border-gray-100">
+        <h1 class="text-2xl font-bold tracking-tight">Admin Panel.</h1>
+        <div class="flex gap-10 text-sm font-medium text-gray-600">
+            <a href="/owners/admin" class="hover:text-black">Dashboard</a>
+            <a href="/products/create" class="hover:text-black border-b-2 border-black">Create Product</a>
+            <a href="/shop" class="hover:text-black">Shop</a>
+            <a href="/users/logout" class="hover:text-black">Logout</a>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-10 py-12 flex">
+        
+        <aside class="w-1/5 space-y-4">
+            <a href="/shop" class="block text-gray-400 hover:text-black transition-colors">All Products</a>
+            <a href="/products/create" class="block font-semibold text-black">Create New Product</a>
+        </aside>
+
+        <main class="w-4/5 pl-20">
+            <h2 class="text-3xl font-semibold mb-8">Create New Product</h2>
+
+            <form action="/products/create" method="POST" enctype="multipart/form-data" class="space-y-12">
+                
+                <section>
+                    <h3 class="text-xl font-medium mb-6">Product Details</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-6 mb-8">
+                            <span class="text-gray-600 font-medium">Product Image</span>
+                            <label class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-sm transition shadow-lg shadow-blue-100">
+                                Select File
+                                <input type="file" name="image" class="hidden" required>
+                            </label>
+                        </div>
+
+                        <div class="w-full">
+                            <input type="text" name="name" placeholder="Product Name" required
+                                class="w-full max-w-md px-4 py-3 bg-white border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition shadow-sm">
+                        </div>
+
+                        <div class="flex gap-4">
+                            <input type="number" name="price" placeholder="Product Price" required
+                                class="w-40 px-4 py-3 bg-white border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition shadow-sm">
+                            
+                            <input type="number" name="discount" placeholder="Discount Price" 
+                                class="w-40 px-4 py-3 bg-white border border-gray-200 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition shadow-sm">
+                        </div>
+                    </div>
+                </section>
+
+                <hr class="border-gray-100">
+
+                <section>
+                    <h3 class="text-xl font-medium mb-6">Panel Details</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <input type="text" name="bgcolor" placeholder="Background Color (e.g., #F5B811)" required
+                                class="w-56 px-4 py-3 bg-white border border-gray-200 rounded-lg outline-none focus:border-blue-500 transition shadow-sm">
+                            
+                            <input type="text" name="panelcolor" placeholder="Panel Color (e.g., #F84343)" required
+                                class="w-56 px-4 py-3 bg-white border border-gray-200 rounded-lg outline-none focus:border-blue-500 transition shadow-sm">
+                        </div>
+
+                        <input type="text" name="textcolor" placeholder="Text Color (e.g., #FFFFFF)" required
+                            class="w-56 px-4 py-3 bg-white border border-gray-200 rounded-lg outline-none focus:border-blue-500 transition shadow-sm">
+                    </div>
+                </section>
+
+                <div class="pt-6">
+                    <button type="submit" class="bg-black text-white px-10 py-4 rounded-xl font-semibold hover:bg-gray-800 transition transform active:scale-95 shadow-xl">
+                        Create Product
+                    </button>
+                </div>
+
+            </form>
+        </main>
+
+    </div>
+
+</body>
+</html>

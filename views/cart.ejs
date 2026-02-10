@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Scatch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    </style>
+</head>
+<body class="bg-zinc-50">
+
+    <!-- Top Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-zinc-200/60 shadow-sm">
+        <div class="max-w-[1600px] mx-auto px-8 lg:px-16">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="/shop" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 bg-black rounded-xl flex items-center justify-center group-hover:bg-zinc-800 transition">
+                        <span class="text-white font-black text-lg">S</span>
+                    </div>
+                    <span class="text-2xl font-black tracking-tight">Scatch</span>
+                </a>
+
+                <!-- Navigation Links -->
+                <div class="flex items-center gap-8">
+                    <a href="/shop" class="text-sm font-semibold text-zinc-500 hover:text-black transition">
+                        Shop
+                    </a>
+                    <a href="/users/cart" class="relative text-sm font-semibold text-black border-b-2 border-black pb-1 transition">
+                        <span>Cart</span>
+                        <% if(user && user.cart && user.cart.length > 0) { %>
+                            <span class="absolute -top-2 -right-4 w-5 h-5 bg-black text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                                <%= user.cart.length %>
+                            </span>
+                        <% } %>
+                    </a>
+                    <a href="/users/logout" class="px-6 py-2.5 bg-zinc-900 text-white text-sm font-semibold rounded-full hover:bg-zinc-800 transition">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-[1400px] mx-auto px-8 lg:px-16 py-12">
+        
+        <!-- Page Header -->
+        <div class="mb-12">
+            <h1 class="text-4xl lg:text-5xl font-black tracking-tight mb-3">Your Shopping Bag</h1>
+            <p class="text-zinc-500 text-lg">
+                <% if(user && user.cart && user.cart.length > 0) { %>
+                    <%= user.cart.length %> <%= user.cart.length === 1 ? 'item' : 'items' %> in your cart
+                <% } else { %>
+                    Your cart is empty
+                <% } %>
+            </p>
+        </div>
+
+        <% if(!user || !user.cart || user.cart.length === 0) { %>
+            <!-- Empty Cart State -->
+            <div class="flex flex-col items-center justify-center py-32">
+                <div class="w-32 h-32 bg-zinc-100 rounded-full flex items-center justify-center mb-8">
+                    <i class="ri-shopping-cart-2-line text-6xl text-zinc-300"></i>
+                </div>
+                <h3 class="text-3xl font-bold text-zinc-800 mb-4">Your cart is empty</h3>
+                <p class="text-zinc-500 mb-8 text-center max-w-md">
+                    Looks like you haven't added anything to your cart yet. Start shopping to fill it up!
+                </p>
+                <a href="/shop" class="px-8 py-4 bg-black text-white font-semibold rounded-full hover:bg-zinc-800 transition inline-flex items-center gap-2">
+                    <i class="ri-arrow-left-line"></i>
+                    Continue Shopping
+                </a>
+            </div>
+        <% } else { %>
+            <!-- Cart Items -->
+            <div class="grid lg:grid-cols-3 gap-8">
+                
+                <!-- Cart Items List -->
+                <div class="lg:col-span-2 space-y-6">
+                    <% 
+                    let subtotal = 0;
+                    user.cart.forEach(function(item){ 
+                        let itemPrice = item.price - (item.discount || 0);
+                        subtotal += itemPrice;
+                    %>
+                        <div class="bg-white rounded-3xl border border-zinc-200/60 overflow-hidden hover:shadow-lg transition">
+                            <div class="flex flex-col sm:flex-row">
+                                <!-- Product Image -->
+                                <div class="sm:w-48 aspect-square flex-shrink-0"
+                                     style="background-color: <%= item.bgcolor || '#F5F5F5' %>">
+                                    <% if(item.image) { %>
+                                        <img src="data:image/jpeg;base64,<%= item.image.toString('base64') %>" 
+                                             alt="<%= item.name %>"
+                                             class="w-full h-full object-cover">
+                                    <% } else { %>
+                                        <div class="w-full h-full flex items-center justify-center">
+                                            <i class="ri-image-line text-5xl text-zinc-300"></i>
+                                        </div>
+                                    <% } %>
+                                </div>
+
+                                <!-- Product Details -->
+                                <div class="flex-1 p-6 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex justify-between items-start mb-2">
+                                            <div>
+                                                <h3 class="text-xl font-bold text-zinc-900"><%= item.name %></h3>
+                                                <p class="text-sm text-zinc-500 mt-1">Premium Collection</p>
+                                            </div>
+                                            <a href="/users/removefromcart/<%= item._id %>" 
+                                               class="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-400 hover:text-red-500 hover:border-red-200 hover:bg-red-50 transition">
+                                                <i class="ri-delete-bin-line text-lg"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-end justify-between mt-6">
+                                        <div class="flex items-center gap-4 bg-zinc-50 px-4 py-2 rounded-full border border-zinc-200">
+                                            <button class="text-zinc-400 hover:text-black transition">
+                                                <i class="ri-subtract-line font-bold"></i>
+                                            </button>
+                                            <span class="font-bold text-sm w-6 text-center">1</span>
+                                            <button class="text-zinc-400 hover:text-black transition">
+                                                <i class="ri-add-line font-bold"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="text-right">
+                                            <% if(item.discount > 0) { %>
+                                                <p class="text-2xl font-black">₹<%= item.price - item.discount %></p>
+                                                <p class="text-sm text-zinc-400 line-through">₹<%= item.price %></p>
+                                            <% } else { %>
+                                                <p class="text-2xl font-black">₹<%= item.price %></p>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-3xl border border-zinc-200/60 p-8 sticky top-32">
+                        <h2 class="text-xl font-bold mb-6">Order Summary</h2>
+
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between text-zinc-600">
+                                <span>Subtotal (<%= user.cart.length %> items)</span>
+                                <span class="font-semibold">₹<%= subtotal %></span>
+                            </div>
+                            <div class="flex justify-between text-zinc-600">
+                                <span>Shipping</span>
+                                <span class="font-semibold text-green-600">FREE</span>
+                            </div>
+                            <div class="flex justify-between text-zinc-600">
+                                <span>Tax</span>
+                                <span class="font-semibold">₹<%= Math.round(subtotal * 0.05) %></span>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-zinc-200 pt-4 mb-8">
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold">Total</span>
+                                <span class="text-3xl font-black">₹<%= subtotal + Math.round(subtotal * 0.05) %></span>
+                            </div>
+                        </div>
+
+                        <button class="w-full bg-black text-white py-4 rounded-2xl font-bold hover:bg-zinc-800 transition mb-4 flex items-center justify-center gap-2">
+                            Proceed to Checkout
+                            <i class="ri-arrow-right-line"></i>
+                        </button>
+
+                        <a href="/shop" class="block text-center text-sm text-zinc-500 hover:text-black transition">
+                            Continue Shopping
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        <% } %>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-zinc-200 mt-24">
+        <div class="max-w-[1600px] mx-auto px-8 lg:px-16 py-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-zinc-500 text-sm">© 2026 Scatch. Crafted with care.</p>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="text-zinc-400 hover:text-zinc-700 transition">
+                        <i class="ri-instagram-line text-xl"></i>
+                    </a>
+                    <a href="#" class="text-zinc-400 hover:text-zinc-700 transition">
+                        <i class="ri-twitter-x-line text-xl"></i>
+                    </a>
+                    <a href="#" class="text-zinc-400 hover:text-zinc-700 transition">
+                        <i class="ri-facebook-circle-line text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

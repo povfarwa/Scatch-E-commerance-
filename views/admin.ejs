@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Scatch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <div class="flex min-h-screen">
+        <aside class="w-64 bg-white border-r border-gray-200 p-6 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center gap-2 mb-10">
+                    <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold">S</span>
+                    </div>
+                    <h1 class="text-xl font-bold tracking-tighter">Scatch Admin</h1>
+                </div>
+                
+                <nav class="space-y-2">
+                    <a href="/owners/admin" class="flex items-center gap-3 p-3 bg-black text-white rounded-lg transition">
+                        <i class="ri-dashboard-line"></i>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+                    <a href="/products/create" class="flex items-center gap-3 p-3 text-gray-500 hover:bg-gray-100 rounded-lg transition">
+                        <i class="ri-add-box-line"></i>
+                        <span class="font-medium">Create Product</span>
+                    </a>
+                    <a href="/shop" class="flex items-center gap-3 p-3 text-gray-500 hover:bg-gray-100 rounded-lg transition">
+                        <i class="ri-store-2-line"></i>
+                        <span class="font-medium">View Shop</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="border-t pt-6">
+                <a href="/users/logout" class="flex items-center gap-3 p-3 text-red-500 hover:bg-red-50 rounded-lg transition">
+                    <i class="ri-logout-box-r-line"></i>
+                    <span class="font-medium">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 p-10">
+            <% if(success && success.length > 0){ %>
+                <div class="mb-5 p-4 bg-green-100 text-green-600 rounded-lg">
+                    <%= success %>
+                </div>
+            <% } %>
+
+            <header class="flex justify-between items-center mb-10">
+                <h2 class="text-3xl font-bold">Welcome Back, Owner</h2>
+                <div class="flex gap-4">
+                    <div class="bg-white px-6 py-3 rounded-xl shadow-sm border flex flex-col">
+                        <span class="text-xs text-gray-400 uppercase font-bold tracking-wider">Total Products</span>
+                        <span class="text-xl font-black">12</span>
+                    </div>
+                    <div class="bg-white px-6 py-3 rounded-xl shadow-sm border flex flex-col">
+                        <span class="text-xs text-gray-400 uppercase font-bold tracking-wider">Total Sales</span>
+                        <span class="text-xl font-black">₹ 45,000</span>
+                    </div>
+                </div>
+            </header>
+
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-blue-600 rounded-2xl p-8 text-white relative overflow-hidden group">
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold mb-2">New Arrival?</h3>
+                        <p class="text-blue-100 mb-6">Add latest products to your shop catalog easily.</p>
+                        <a href="/products/create" class="inline-block bg-white text-blue-600 px-6 py-3 rounded-xl font-bold hover:shadow-lg transition">
+                            Add Product
+                        </a>
+                    </div>
+                    <i class="ri-shopping-bag-3-fill absolute -bottom-10 -right-10 text-[12rem] text-blue-500/30 group-hover:scale-110 transition-transform"></i>
+                </div>
+
+                <div class="bg-white border rounded-2xl p-8 flex flex-col justify-center items-center text-center">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="ri-settings-4-line text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Store Settings</h3>
+                    <p class="text-gray-500 text-sm mt-2">Update your GSTIN, Email or Business Name.</p>
+                    <button class="mt-4 text-blue-600 font-semibold hover:underline">Manage Account</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
