@@ -1,3 +1,13 @@
+<h1 align="center">🛍️ Scatch E-Commerce Website</h1>
+
+<p align="center">
+  <img src="./gifs/typing.gif" width="400">
+</p>
+
+<p align="center">
+  A full-stack e-commerce web application with authentication and admin control.
+</p>
+
 # 🛍️ E-Commerce Website
 
 An online shopping web application where users can create accounts, login, browse products, and add items to their cart.  
@@ -60,3 +70,11 @@ e-commerce-website/
 3. Products are displayed from database.
 4. User adds products to cart.
 5. Admin can create new products from backend.
+
+## ⚙️ Installation
+
+```bash
+git clone https://github.com/yourusername/your-repo-name.git
+cd your-repo-name
+npm install
+npm start
