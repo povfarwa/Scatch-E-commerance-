@@ -34,4 +34,44 @@ Admins can create and manage products.
 ---
 
 ## 📂 Project Structure
+e-commerce-website/
+│── models/
+│── routes/
+│── views/
+│── public/
+│── app.js
+│── package.json
+
+
+---
+
+## 🔐 Authentication
+
+- Passwords are securely hashed using **bcrypt**
+- User authentication handled using **JWT tokens**
+- Session-based access control
+
+---
+
+## 🛒 How It Works
+
+1. User creates an account.
+2. User logs in.
+3. Products are displayed from database.
+4. User adds products to cart.
+5. Admin can create new products from backend.
+
+---
+
+## ⚙️ Installation
+
+```bash
+git clone https://github.com/yourusername/your-repo-name.git
+cd your-repo-name
+npm install
+npm start
+
+<p align="center">
+  <img src="./Gifs/.gif" width="400">
+</p>
 
