@@ -60,17 +60,3 @@ e-commerce-website/
 3. Products are displayed from database.
 4. User adds products to cart.
 5. Admin can create new products from backend.
-
----
-
-## ⚙️ Installation
-
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
-npm install
-npm start
-
-<p align="center">
-  <img src="./gifs/typing.gif" width="400">
-</p>
-
