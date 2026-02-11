@@ -65,13 +65,12 @@ e-commerce-website/
 
 ## ⚙️ Installation
 
-```bash
 git clone https://github.com/yourusername/your-repo-name.git
 cd your-repo-name
 npm install
 npm start
 
 <p align="center">
-  <img src="./Gifs/.gif" width="400">
+  <img src="./gifs/typing.gif" width="400">
 </p>
 
