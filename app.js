@@ -1,44 +1,50 @@
-import express from "express";
-import cookieParser from "cookie-parser";
-import path from "path";
-import session from "express-session";
-import flash from "connect-flash";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-import connectDB from "./db/connection.js";
-import indexRouter from "./routes/index.js";
-import ownersRouter from "./routes/ownersRouter.js";
-import usersRouter from "./routes/usersRouter.js";
-import productsRouter from "./routes/productsRouter.js";
+const express = require ('express')
+const app = express()
+const cookieParser = require('cookie-parser')
+const path = require('path')
+const db = require('./config/mongoose-connection')
+const ownersRouter = require('./routes/ownersRouter')
+const usersRouter = require('./routes/usersRouter')
+const productsRouter = require('./routes/productsRouter')
+require("dotenv").config();
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const path = require('path');
+const expressSession = require("express-session");
+const flash = require("connect-flash");
 
-const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const db = require('./config/mongoose-connection');
+const indexRouter = require('./routes/index');
+const ownersRouter = require('./routes/ownersRouter');
+const usersRouter = require('./routes/usersRouter');
+const productsRouter = require('./routes/productsRouter');
 
-/* middlewares */
+app.use(express.json())
+app.use(express.urlencoded({ extended : true }))
+app.use(cookieParser())
+app.use('/public' , express.static(path.join(__dirname , 'public')))
+app.set('view engine' , 'ejs')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(session({
-  resave: false,
-  saveUninitialized: false,
-  secret: process.env.EXPRESS_SESSION_SECRET || "development_secret",
+app.use(expressSession({
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.EXPRESS_SESSION_SECRET || "development_secret"
 }));
 app.use(flash());
-app.use(express.static(path.join(__dirname, "public")));
-app.set("view engine", "ejs");
 
-/* routes */
-app.use("/", indexRouter);
-app.use("/owners", ownersRouter);
-app.use("/users", usersRouter);
-app.use("/products", productsRouter);
+app.use('/owner' , ownersRouter)//“Jab bhi URL /owner se start ho to ownersRouter ke andar jao”
+app.use('/user' , usersRouter)
+app.use('/product' , productsRouter)
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'ejs');
 
-/* start server */
-async function startServer() {
-  await connectDB();
-  app.listen(3000, () => console.log("Server running on http://localhost:3000"));
-}
-startServer();
+app.listen(3000)
+// Routes - FIXED: Changed to plural to match router paths
+app.use('/', indexRouter);
+app.use('/owners', ownersRouter);
+app.use('/users', usersRouter);
+app.use('/products', productsRouter);
 
-export default app;
+app.listen(3000, () => console.log("Server is running on http://localhost:3000"));
